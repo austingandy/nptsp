@@ -7,15 +7,10 @@ reds = []
 blues = []
 
 def main(argv):
-	if int(argv) == 0:
-		solve()
-	else:
-		fix()
-
-def solve():
+	numSolutions = int(argv[0])
 	global numVerts, edges, colors, reds, blues
 	answerList = []
-	for i in range(1, 496):
+	for i in range(1, numSolutions):
 		print "working on file number " + str(i)
 		fileName = "instances/" + str(i) + ".in"
 		info = open(fileName, "r")
@@ -236,33 +231,6 @@ def findBest(currVert, visited, nextPossible):
 		print "nextPossible is " + str(nextPossible)
 		print "toVisit is " + str(toVisit)
 	return next, bestCost, colors[next]
-
-def fix():
-	""" Corrects any mistakes the algorithm made previously """
-	scores = open("score.txt", 'r')
-	paths = open("answer.out", 'r')
-	newAnswers = open("new_answers.out", 'w')
-	answerList = []
-	for i in range(495):
-		score = int(scores.readline())
-		line = paths.readline()
-		if score == -1:
-			info = open("instances/" + str(i+1) + ".in", "r")
-			print "working on file number " + str(i)
-			settup(info)
-			bestPath = [v+1 for v in runIterations()]
-			answer = ""
-			for num in bestPath:
-				answer = answer + str(num) + " "
-			answer += "\n"
-			answerList.append(answer)
-			info.close()
-		else:
-			answerList.append(line)
-	scores.close()
-	paths.close()
-	newAnswers.writelines(answerList)
-	newAnswers.close()
 
 if __name__ == '__main__':
 	main(sys.argv[1])
