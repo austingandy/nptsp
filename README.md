@@ -1,3 +1,5 @@
+Non-Partisan Travelling Senator Problem
+=====
 The non-partisan travelling senator problem has the same goals as the traveling salesman problem (to find the ordering of cities that minimizes the distance traveled to those cities) with the addition of some constraints outlined below.
 
 In the non-partisan travelling senator problem (NPTSP), each city also has a color, either RED or BLUE,
@@ -13,4 +15,4 @@ Constraints:
 	The number of verticies will be an even integer from 1 and 50, inclusive
 	The edge weights will be an integer between 1 and 100, inclusive.
 
-To run the program, simply run python soltion.py <numInputs> where <numInputs> is the number of instances of TSP you want to solve for (you can see these in the /instances directory)
+To run the program, simply run ```python solution.py numInputs``` where numInputs is the number of instances of TSP you want to solve for (you can see these in the /instances directory)
