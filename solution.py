@@ -55,25 +55,20 @@ def runIterations():
 		betterPath = simAnneal(path, simCount)
 		betterPathCost = cost(betterPath)
 		count += 1
-	randomPath = findRandomPath()
-	randPath = simAnneal(randomPath, simCount)
-	randPath2 = findRandomPath()
-	randPath3 = findRandomPath()
-	randPath2 = simAnneal(randPath2, simCount)
-	randPath3 = simAnneal(randPath3, simCount)
-	randCost = cost(randPath)
-	randCost2 = cost(randPath2)
-	randCost3 = cost(randPath3)
-	if randCost <= betterPathCost and randCost <= pathCost and randCost <= randCost2 and randCost <= randCost3:
-		return randPath
-	elif betterPathCost <= pathCost and betterPathCost <= randCost2 and betterPathCost <= randCost3:
-		return betterPath
-	elif pathCost <= randCost2 and pathCost <= randCost3:
-		return path
-	elif randCost2 <= randCost3:
-		return randPath2
-	else:
-		return randPath3
+	paths = []
+	paths.append((betterPath, betterPathCost))
+	for i in range(2):
+		path = simAnneal(findRandomPath(), simCount)
+		paths.append((path, cost(path())))
+	path = findRandomPath()
+	paths.append(path, cost(path))
+	minCost = sys.maxint
+	bestPath = None
+	for path, pathCost in paths:
+		if pathCost < minCost:
+			bestPath = path
+			minCost = pathCost
+	return bestPath
 
 """ Returns a randomly chosen path. """
 def findRandomPath():
@@ -151,7 +146,7 @@ def simAnneal(start, kMax):
 		t = temp(float(k), float(kMax))
 		new = findNeighbor(curr)
 		newCost = cost(new)
-		if acceptanceProb(currCost, newCost, t) >= random.random():
+		if newCost <= currCost or acceptanceProb(currCost, newCost, t) >= random.random():
 			curr = new
 			currCost = newCost
 	return curr
